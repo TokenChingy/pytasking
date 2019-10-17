@@ -2,17 +2,6 @@ import asyncio
 import multiprocessing
 import time
 
-CancelledError = asyncio.CancelledError
-Pipe = multiprocessing.Pipe
-Queue = multiprocessing.Queue
-
-
-def sleep(seconds, sync=False):
-    if sync:
-        return time.sleep(seconds)
-    else:
-        return asyncio.sleep(seconds)
-
 
 class Manager:
     def __init__(self, *args, **kwargs):
