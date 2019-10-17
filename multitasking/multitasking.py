@@ -1,11 +1,13 @@
 import asyncio
 import multiprocessing
 import time
+import uvloop
 
 
 class Manager:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
         self.__loop = asyncio.get_event_loop()
         self.__tasks = {}
         self.__processes = {}
