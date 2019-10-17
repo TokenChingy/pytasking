@@ -1,5 +1,4 @@
 import asyncio
-import logging
 import multiprocessing
 
 
@@ -9,12 +8,9 @@ class Manager:
 
         try:
             import uvloop
-
             asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
         except:
-            logging.info(
-                "Python3 module `uvloop` not found, defaulting to standard asyncio event loop policy."
-            )
+            pass
 
         self.__started = False
         self.__loop = asyncio.get_event_loop()
@@ -25,7 +21,7 @@ class Manager:
         await asyncio.gather(*self.__tasks.values())
 
     def add_task(self, task, *args, **kwargs):
-        t = asyncio.ensure_future(task(*args))
+        t = asyncio.ensure_future(task(*args, **kwargs))
         t_id = hash(t)
         self.__tasks[t_id] = t
         return t_id
@@ -54,8 +50,6 @@ class Manager:
         self.__processes[p_id].join()
 
     def start(self):
-        logging.info("Multitasking manager started...")
-
         for p in self.__processes.values():
             p.start()
 
