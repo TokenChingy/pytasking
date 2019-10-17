@@ -24,10 +24,6 @@ if __name__ == "__main__":
         while True:
             try:
                 print(messages.get_nowait())
-            except:
-                pass
-
-            try:
                 print(blah.get_nowait())
             except:
                 pass
