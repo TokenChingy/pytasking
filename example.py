@@ -1,4 +1,5 @@
 import multitasking
+import time
 
 if __name__ == "__main__":
     messages = multitasking.Queue()
@@ -6,15 +7,15 @@ if __name__ == "__main__":
 
     def hello():
         while True:
-            blah.put("Hello world!")
+            blah.put(f"Hello world! {time.time()}")
             multitasking.sleep(0.25, sync=True)
 
     async def ping():
         try:
-            messages.put("Ping pong!")
+            messages.put(f"Ping pong! {time.time()}")
             await multitasking.sleep(1.0)
         except multitasking.CancelledError:
-            messages.put("Task cancelled!")
+            messages.put(f"Task cancelled! {time.time()}")
 
     async def main(manager):
         proc = manager.add_process(hello)
@@ -33,7 +34,7 @@ if __name__ == "__main__":
 
             if i == 5:
                 manager.delete_process(proc)
-                blah.put("Processed cancelled!")
+                blah.put(f"Processed cancelled! {time.time()}")
 
             task = manager.add_task(ping)
 
