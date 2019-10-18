@@ -20,6 +20,12 @@ class Manager:
     async def __tasks__(self):
         await asyncio.gather(*self.__tasks.values())
 
+    def __procs__(self):
+        for p in self.__processes.values():
+            p.start()
+
+        self.__started = True
+
     def add_task(self, task, *args, **kwargs):
         t = asyncio.ensure_future(task(*args, **kwargs))
         t_id = hash(t)
@@ -30,7 +36,7 @@ class Manager:
         self.__tasks[t_id].cancel()
         del self.__tasks[t_id]
 
-    def add_process(self, proc, *args, **kwargs):
+    def add_proc(self, proc, *args, **kwargs):
         p = multiprocessing.Process(
             target=proc,
             args=args,
@@ -45,14 +51,11 @@ class Manager:
 
         return p_id
 
-    def delete_process(self, p_id):
+    def delete_proc(self, p_id):
         self.__processes[p_id].terminate()
         self.__processes[p_id].join()
 
     def start(self):
-        for p in self.__processes.values():
-            p.start()
-
-        self.__started = True
+        self.__procs__()
         self.__loop.run_until_complete(asyncio.ensure_future(self.__tasks__()))
         self.__loop.close()

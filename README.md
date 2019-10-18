@@ -1,3 +1,27 @@
+# Multitasking for Python 3.5+
+
+A simple library that provides an easy interface to multitasking.
+
+## Table of Contents
+
+- [Multitasking for Python 3.5+](#multitasking-for-python-35)
+  - [Table of Contents](#table-of-contents)
+  - [Dependencies](#dependencies)
+  - [Usage](#usage)
+
+## Dependencies
+
+- Python 3.5+
+
+*There are no external module dependencies outside of the standard library however, if you'd like to take advantage of `uvloop`, you can install that and the `multitasking` library will use it automatically (Only available on Linux/MacOS).*
+
+## Usage
+
+- Include the directory `multitasking` in your project root directory.
+
+A basic python example:
+
+```python
 #!/usr/bin/env python3
 
 import multitasking
@@ -55,3 +79,8 @@ if __name__ == "__main__":
     pass
   except:
     raise
+```
+
+There maybe situations where you cannot spawn a task in a task, process in a process, task in a process, or a process in a task – these will be the edge cases.
+
+If you decide to delete a process be wary, if the process was in the middle of accessing a Queue or Pipe, that Queue or Pipe will be liable to corruption and will not be usable again.
