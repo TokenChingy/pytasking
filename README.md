@@ -18,11 +18,12 @@ A simple library that provides an easy interface to multitasking.
 ## Usage
 
 - Include the directory `multitasking` in your project root directory.
+- If on Linux/MacOS; run `python -m pip install -r requirements.txt`.
 
 A basic python example:
 
 ```python
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import multitasking
 import time
