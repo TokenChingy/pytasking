@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pytasking",
-    version="0.0.1",
+    version="1.0.0",
     author="Jason Zi Feng Lei",
     author_email="TokenChingy@gmail.com",
     description="A multitasking library for Python 3.5+",

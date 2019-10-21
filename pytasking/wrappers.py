@@ -12,4 +12,3 @@ Event = multiprocessing.Event
 Lock = multiprocessing.Lock
 RLock = multiprocessing.RLock
 Semaphore = multiprocessing.Semaphore
-Timer = multiprocessing.Timer
