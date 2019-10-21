@@ -13,15 +13,15 @@ class Manager:
             pass
 
         self.__started = False
-        self.__loop = asyncio.get_event_loop()
         self.__tasks = {}
-        self.__processes = {}
+        self.__procs = {}
+        self.loop = asyncio.get_event_loop()
 
     async def __tasks__(self):
         await asyncio.gather(*self.__tasks.values())
 
     def __procs__(self):
-        for p in self.__processes.values():
+        for p in self.__procs.values():
             p.start()
 
         self.__started = True
@@ -44,7 +44,7 @@ class Manager:
         )
         p.daemon = True
         p_id = hash(p)
-        self.__processes[p_id] = p
+        self.__procs[p_id] = p
 
         if self.__started:
             p.start()
@@ -52,10 +52,10 @@ class Manager:
         return p_id
 
     def delete_proc(self, p_id):
-        self.__processes[p_id].terminate()
-        self.__processes[p_id].join()
+        self.__procs[p_id].terminate()
+        self.__procs[p_id].join()
 
     def start(self):
         self.__procs__()
-        self.__loop.run_until_complete(asyncio.ensure_future(self.__tasks__()))
-        self.__loop.close()
+        self.loop.run_until_complete(asyncio.ensure_future(self.__tasks__()))
+        self.loop.close()
