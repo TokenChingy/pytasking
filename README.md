@@ -1,10 +1,10 @@
-# Multitasking for Python 3.5+
+# Pytasking
 
-A simple library that provides an easy interface to multitasking.
+A simple library for Python 3.5+ that provides an easy interface for multitasking.
 
 ## Table of Contents
 
-- [Multitasking for Python 3.5+](#multitasking-for-python-35)
+- [Pytasking](#pytasking)
   - [Table of Contents](#table-of-contents)
   - [Dependencies](#dependencies)
   - [Usage](#usage)
@@ -13,11 +13,11 @@ A simple library that provides an easy interface to multitasking.
 
 - Python 3.5+
 
-*There are no external module dependencies outside of the standard library however, if you'd like to take advantage of `uvloop`, you can install that and the `multitasking` library will use it automatically (Only available on Linux/MacOS).*
+*There are no external module dependencies outside of the standard library however, if you'd like to take advantage of `uvloop`, you can install that and the `pytasking` library will use it automatically (Only available on Linux/MacOS).*
 
 ## Usage
 
-- Include the directory `multitasking` in your project root directory.
+- Include the directory `pytasking` in your project root directory.
 - If on Linux/MacOS; run `python -m pip install -r requirements.txt`.
 
 A basic python example:
@@ -25,30 +25,30 @@ A basic python example:
 ```python
 #!/usr/bin/env python
 
-import multitasking
+import pytasking
 import time
 
 
 def hello(hello_queue):
   while True:
     hello_queue.put_nowait("Hello World!")
-    multitasking.sleep(1.5, sync=True)
+    pytasking.sleep(1.5, sync=True)
 
 
 async def ping():
   while True:
     try:
       print("Ping!")
-      await multitasking.sleep(1.0)
+      await pytasking.sleep(1.0)
       print("Pong!")
-    except multitasking.CancelledError:
+    except pytasking.CancelledError:
       print("Pang!")
       break
 
 
 async def main(task_manager):
   hellos = 0
-  hello_queue = multitasking.Queue()
+  hello_queue = pytasking.Queue()
   hello_proc = task_manager.add_proc(hello, hello_queue)
 
   while True:
@@ -64,14 +64,14 @@ async def main(task_manager):
           pass
 
       ping_task = task_manager.add_task(ping)
-      await multitasking.sleep(0.5)
+      await pytasking.sleep(0.5)
       task_manager.delete_task(ping_task)
-    except multitasking.CancelledError:
+    except pytasking.CancelledError:
       break
 
 
 if __name__ == "__main__":
-  task_manager = multitasking.Manager()
+  task_manager = pytasking.Manager()
   task_manager.add_task(main, task_manager)
 
   try:
