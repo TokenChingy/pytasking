@@ -22,6 +22,9 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
       - [`get_proc(p_id)`](#getprocpid)
       - [`get_procs()`](#getprocs)
       - [`start()`](#start)
+  - [Known Issues](#known-issues)
+    - [Recursive spawning](#recursive-spawning)
+    - [Pipe/Queue corruption](#pipequeue-corruption)
 
 ## Dependencies
 
@@ -108,7 +111,7 @@ if __name__ == "__main__":
 
 ### `class pytasking.Manager()`
 
-Instances of the `Manager` class provide an asynchronous event loop to the program. Currently pytasking only **supports 1 asynchronous event loop** at any given time.
+Instances of the `Manager` class provide an asynchronous event loop to the program. Currently pytasking **only supports 1 asynchronous event loop** at any given time.
 
 Asynchronous tasks and parallel processes are spawned and managed by the `Manager` instance.
 
@@ -125,16 +128,25 @@ async def asynchronous_task_definition(): # Define any arguments or keyword argu
     try:
       # Do something forever.
     except pytasking.CancelledError: # This one is important.
+      # Normally you catch the cancel event and do something with it, but in this case, use it to break the loop and allow the task to close the task.
       break
     except:
       raise
 ```
 
+Tasks will start immediately and you may add a task anytime.
+
 #### `delete_task(t_id)`
+
+Given a task id, you can call to delete a task. This method calls the `cancel()` method of the coroutine, it will give the coroutine the chance to cleanup and even deny the request if caught and handled in the `pytasking.CancelledError`.
 
 #### `get_task(t_id)`
 
+If you want to retrieve the underlying coroutine, you can use this method and provide the task id to get it.
+
 #### `get_tasks()`
+
+This will return all the task ids as a list, you can use this method in conjunction with `get_task(t_id)`.
 
 #### `add_proc(proc, *args, **kwargs)`
 
@@ -142,10 +154,20 @@ async def asynchronous_task_definition(): # Define any arguments or keyword argu
 
 #### `get_proc(p_id)`
 
+If you want to retrieve the underlying process, you can use this method and provide the process id to get it.
+
 #### `get_procs()`
+
+This will return all the process ids as a list, you can use this method in conjunction with `get_process(p_id)`.
 
 #### `start()`
 
-There maybe situations where you cannot spawn a task in a task, process in a process, task in a process, or a process in a task – these will be the edge cases.
+## Known Issues
+
+### Recursive spawning
+
+There maybe situations where you cannot spawn a task in a task, process in a process, task in a process, or a process in a task. I'll need to investigate further.
+
+### Pipe/Queue corruption
 
 If you decide to delete a process be wary, if the process was in the middle of accessing a Queue or Pipe, that Queue or Pipe will be liable to corruption and will not be usable again.
