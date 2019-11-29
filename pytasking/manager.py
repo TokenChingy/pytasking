@@ -36,6 +36,12 @@ class Manager:
         self.__tasks[t_id].cancel()
         del self.__tasks[t_id]
 
+    def get_task(self, t_id):
+        return self.__tasks[t_id]
+
+    def get_tasks(self):
+        return [*self.__tasks.keys()]
+
     def add_proc(self, proc, *args, **kwargs):
         p = multiprocessing.Process(
             target=proc,
@@ -54,6 +60,12 @@ class Manager:
     def delete_proc(self, p_id):
         self.__procs[p_id].terminate()
         self.__procs[p_id].join()
+
+    def get_proc(self, p_id):
+        return self.__procs[p_id]
+
+    def get_procs(self):
+        return [*self.__procs.keys()]
 
     def start(self):
         self.__procs__()
