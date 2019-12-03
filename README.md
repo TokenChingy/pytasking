@@ -127,6 +127,7 @@ async def asynchronous_task_definition(): # Define any arguments or keyword argu
   while True:
     try:
       # Do something forever.
+      await pytasking.sleep(1.0)
     except pytasking.CancelledError: # This one is important.
       # Normally you catch the cancel event and do something with it, but in this case, use it to break the loop and allow the task to close the task.
       break
@@ -150,7 +151,24 @@ This will return all the task ids as a list, you can use this method in conjunct
 
 #### `add_proc(proc, *args, **kwargs)`
 
+Create a parallel process from a function definition. Pass arguments and keyword arguments as you would normally. This function returns an id from the has of the process. You can use the id to retrieve and delete the process. Do note, by default the process runs sequentially. Try to follow this template:
+
+```python
+def parallel_process(): # Define any arguments or keyword arguments as you normally would.
+  # Do whatever you need to do here as you normally would.
+
+  # If you want this task to run indefinitely, do this:
+  while True:
+    try:
+      # Do something forever.
+      pytasking.sleep(1.0, sync=True)
+    except:
+      raise
+```
+
 #### `delete_proc(p_id)`
+
+Given a process id, you can call to delete a process. This method calls `terminate()` and `join()` to attempt to cleanly close the process. Closing the process while it is accessing a Pipe or Queue, may corrupt the resource.
 
 #### `get_proc(p_id)`
 
@@ -161,6 +179,8 @@ If you want to retrieve the underlying process, you can use this method and prov
 This will return all the process ids as a list, you can use this method in conjunction with `get_process(p_id)`.
 
 #### `start()`
+
+This begins the `Manager` instance and starts all added tasks and processes.
 
 ## Known Issues
 
