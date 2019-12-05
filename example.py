@@ -16,14 +16,14 @@ async def ping():
             print("Ping!")
             await pytasking.sleep(1.0)
             print("Pong!")
-        except pytasking.CancelledError:
+        except pytasking.asyncio.CancelledError:
             print("Pang!")
             break
 
 
 async def main(task_manager):
     hellos = 0
-    hello_queue = pytasking.Queue()
+    hello_queue = pytasking.multiprocessing.Queue()
     hello_proc = task_manager.add_proc(hello, hello_queue)
 
     while True:
@@ -41,7 +41,7 @@ async def main(task_manager):
             ping_task = task_manager.add_task(ping)
             await pytasking.sleep(0.5)
             task_manager.delete_task(ping_task)
-        except pytasking.CancelledError:
+        except pytasking.asyncio.CancelledError:
             break
 
 

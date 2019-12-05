@@ -1,11 +1,11 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="pytasking",
-    version="1.1.0",
+    version="1.2.0",
     author="Jason Zi Feng Lei",
     author_email="TokenChingy@gmail.com",
     description="A multitasking library for Python 3.5+",

@@ -25,6 +25,12 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
   - [Known Issues](#known-issues)
     - [Recursive spawning](#recursive-spawning)
     - [Pipe/Queue corruption](#pipequeue-corruption)
+  - [CHANGELOG](#changelog)
+    - [1.2.0](#120)
+      - [Breaking Changes](#breaking-changes)
+    - [1.1.0](#110)
+    - [1.0.0](#100)
+
 
 ## Dependencies
 
@@ -66,14 +72,14 @@ async def ping():
       print("Ping!")
       await pytasking.sleep(1.0)
       print("Pong!")
-    except pytasking.CancelledError:
+    except pytasking.asyncio.CancelledError:
       print("Pang!")
       break
 
 
 async def main(task_manager):
   hellos = 0
-  hello_queue = pytasking.Queue()
+  hello_queue = pytasking.multiprocessing.Queue()
   hello_proc = task_manager.add_proc(hello, hello_queue)
 
   while True:
@@ -91,7 +97,7 @@ async def main(task_manager):
       ping_task = task_manager.add_task(ping)
       await pytasking.sleep(0.5)
       task_manager.delete_task(ping_task)
-    except pytasking.CancelledError:
+    except pytasking.asyncio.CancelledError:
       break
 
 
@@ -128,7 +134,7 @@ async def asynchronous_task_definition(): # Define any arguments or keyword argu
     try:
       # Do something forever.
       await pytasking.sleep(1.0)
-    except pytasking.CancelledError: # This one is important.
+    except pytasking.asyncio.CancelledError: # This one is important.
       # Normally you catch the cancel event and do something with it, but in this case, use it to break the loop and allow the task to close the task.
       break
     except:
@@ -191,3 +197,20 @@ There maybe situations where you cannot spawn a task in a task, process in a pro
 ### Pipe/Queue corruption
 
 If you decide to delete a process be wary, if the process was in the middle of accessing a Queue or Pipe, that Queue or Pipe will be liable to corruption and will not be usable again.
+
+## CHANGELOG
+
+### 1.2.0
+
+#### Breaking Changes
+
+- All wrapped exceptions and data structures from the `asyncio` and `multiprocessing` modules have now been namespaced into pytasking. For example; `pytasking.CancelledError` is now `pytasking.asyncio.CancelledError`. This change is so that it is more explicit and natural.
+
+### 1.1.0
+
+- Improved documentation.
+- Implemented additional helper methods for the Manager class – see the documentation for details.
+
+### 1.0.0
+
+- This is the initial release of pytasking.
