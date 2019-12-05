@@ -8,7 +8,6 @@
 
 - All wrapped exceptions and data structures from the `asyncio` and `multiprocessing` modules have now been namespaced into pytasking. For example; `pytasking.CancelledError` is now `pytasking.asyncio.CancelledError`. This change is so that it is more explicit and natural.
 
-
 ## 1.1.0
 
 - Improved documentation.
