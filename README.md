@@ -26,7 +26,7 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
     - [Recursive spawning](#recursive-spawning)
     - [Pipe/Queue corruption](#pipequeue-corruption)
   - [Changelog](#changelog)
-    - [1.2.0](#120)
+    - [1.2](#12)
       - [Breaking Changes](#breaking-changes)
     - [1.1.0](#110)
     - [1.0.0](#100)
@@ -200,7 +200,9 @@ If you decide to delete a process be wary, if the process was in the middle of a
 
 ## Changelog
 
-### 1.2.0
+### 1.2
+
+- Changing naming convention, moving toward 1.x convention.
 
 #### Breaking Changes
 
