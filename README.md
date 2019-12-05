@@ -25,7 +25,7 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
   - [Known Issues](#known-issues)
     - [Recursive spawning](#recursive-spawning)
     - [Pipe/Queue corruption](#pipequeue-corruption)
-  - [CHANGELOG](#changelog)
+  - [Changelog](#changelog)
     - [1.2.0](#120)
       - [Breaking Changes](#breaking-changes)
     - [1.1.0](#110)
@@ -198,7 +198,7 @@ There maybe situations where you cannot spawn a task in a task, process in a pro
 
 If you decide to delete a process be wary, if the process was in the middle of accessing a Queue or Pipe, that Queue or Pipe will be liable to corruption and will not be usable again.
 
-## CHANGELOG
+## Changelog
 
 ### 1.2.0
 
