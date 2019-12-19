@@ -1,3 +1,5 @@
+[![Downloads](https://pepy.tech/badge/pytasking)](https://pepy.tech/project/pytasking)
+
 # Pytasking
 
 A simple library for Python 3.5+ that provides an easy interface for multitasking.
