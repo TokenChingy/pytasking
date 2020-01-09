@@ -12,20 +12,20 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
     - [PyPi](#pypi)
   - [Usage](#usage)
   - [API](#api)
-    - [`class pytasking.Manager()`](#class-pytaskingmanager)
-      - [`add_task(task, *args, **kwargs)`](#addtasktask-args-kwargs)
-      - [`delete_task(t_id)`](#deletetasktid)
-      - [`get_task(t_id)`](#gettasktid)
-      - [`get_tasks()`](#gettasks)
-      - [`add_proc(proc, *args, **kwargs)`](#addprocproc-args-kwargs)
-      - [`delete_proc(p_id)`](#deleteprocpid)
-      - [`get_proc(p_id)`](#getprocpid)
-      - [`get_procs()`](#getprocs)
-      - [`start()`](#start)
+    - [class pytasking.Manager()](#class-pytaskingmanager)
+      - [add_task(task, *args, **kwargs)](#addtasktask-args-kwargs)
+      - [delete_task(t_id)](#deletetasktid)
+      - [get_task(t_id)](#gettasktid)
+      - [get_tasks()](#gettasks)
+      - [add_proc(proc, *args, **kwargs)](#addprocproc-args-kwargs)
+      - [delete_proc(p_id)](#deleteprocpid)
+      - [get_proc(p_id)](#getprocpid)
+      - [get_procs()](#getprocs)
+      - [start()](#start)
   - [Known Issues](#known-issues)
     - [Recursive spawning](#recursive-spawning)
     - [Pipe/Queue corruption](#pipequeue-corruption)
-  - [Changelog](#changelog)
+  - [Changes](#changes)
     - [1.2](#12)
       - [Breaking Changes](#breaking-changes)
     - [1.1.0](#110)
@@ -87,7 +87,7 @@ async def main(task_manager):
       if hellos == 5:
         task_manager.delete_proc(hello_proc)
 
-      if hello_queue.qsize() > 0:
+      if not hello_queue.empty():
         try:
           print(hello_queue.get_nowait())
           hellos += 1
@@ -198,7 +198,7 @@ There maybe situations where you cannot spawn a task in a task, process in a pro
 
 If you decide to delete a process be wary, if the process was in the middle of accessing a Queue or Pipe, that Queue or Pipe will be liable to corruption and will not be usable again.
 
-## Changelog
+## Changes
 
 ### 1.2
 

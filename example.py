@@ -31,7 +31,7 @@ async def main(task_manager):
             if hellos == 5:
                 task_manager.delete_proc(hello_proc)
 
-            if hello_queue.qsize() > 0:
+            if not hello_queue.empty():
                 try:
                     print(hello_queue.get_nowait())
                     hellos += 1
