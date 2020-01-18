@@ -32,6 +32,7 @@ A simple library for Python 3.5+ that provides an easy interface for multitaskin
       - [Breaking Changes](#breaking-changes)
     - [1.1.0](#110)
     - [1.0.0](#100)
+  - [Stargazers Over Time](#stargazers-over-time)
 
 
 ## Dependencies
@@ -218,3 +219,7 @@ If you decide to delete a process be wary, if the process was in the middle of a
 ### 1.0.0
 
 - This is the initial release of pytasking.
+
+## Stargazers Over Time
+
+[![Stargazers over time](https://starchart.cc/TokenChingy/pytasking.svg)](https://starchart.cc/TokenChingy/pytasking)
